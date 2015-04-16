@@ -23,6 +23,7 @@ class Libsndfile < Formula
   depends_on "libvorbis"
 
   option :universal
+  option 'osxversion=', "Select OSX_DEPLOYMENT_TARGET (e.g. '10.5')"
 
   # libsndfile doesn't find Carbon.h using XCode 4.3:
   # fixed upstream: https://github.com/erikd/libsndfile/commit/d04e1de82ae0af48fd09d5cb09bf21b4ca8d513c
@@ -42,6 +43,7 @@ class Libsndfile < Formula
   end
 
   def install
+    ENV["MACOSX_DEPLOYMENT_TARGET"] = ARGV.value('osxversion') || ''
     ENV.universal_binary if build.universal?
 
     system "autoreconf", "-i"

@@ -20,6 +20,7 @@ class Flac < Formula
   end
 
   option :universal
+  option 'osxversion=', "Select OSX_DEPLOYMENT_TARGET (e.g. '10.5')"
 
   depends_on "pkg-config" => :build
   depends_on "libogg" => :optional
@@ -35,6 +36,7 @@ class Flac < Formula
   end
 
   def install
+    ENV["MACOSX_DEPLOYMENT_TARGET"] = ARGV.value('osxversion') || ''
     ENV.universal_binary if build.universal?
 
     ENV.append "CFLAGS", "-std=gnu89"

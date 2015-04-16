@@ -16,11 +16,13 @@ class Fftw < Formula
   option "with-fortran", "Enable Fortran bindings"
   option :universal
   option "with-mpi", "Enable MPI parallel transforms"
+  option 'osxversion=', "Select OSX_DEPLOYMENT_TARGET (e.g. '10.5')"
 
   depends_on :fortran => :optional
   depends_on :mpi => [:cc, :optional]
 
   def install
+    ENV["MACOSX_DEPLOYMENT_TARGET"] = ARGV.value('osxversion') || ''
     args = ["--enable-shared",
             "--disable-debug",
             "--prefix=#{prefix}",

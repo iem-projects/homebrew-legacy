@@ -21,11 +21,13 @@ class Libvorbis < Formula
   end
 
   option :universal
+  option 'osxversion=', "Select OSX_DEPLOYMENT_TARGET (e.g. '10.5')"
 
   depends_on 'pkg-config' => :build
   depends_on 'libogg'
 
   def install
+    ENV["MACOSX_DEPLOYMENT_TARGET"] = ARGV.value('osxversion') || ''
     ENV.universal_binary if build.universal?
 
     system "./autogen.sh" if build.head?
