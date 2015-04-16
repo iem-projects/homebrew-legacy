@@ -22,9 +22,11 @@ class Libogg < Formula
   end
 
   option :universal
+  option 'osxversion=', "Select OSX_DEPLOYMENT_TARGET (e.g. '10.5')"
 
   def install
     ENV.universal_binary if build.universal?
+    ENV["MACOSX_DEPLOYMENT_TARGET"] = ARGV.value('osxversion') || ''
 
     system "./autogen.sh" if build.head?
     system "./configure", "--disable-dependency-tracking",
